@@ -21,4 +21,7 @@ public class System {
 	public void removeUser(User user){
 		users.remove(user);
 	}
+	
+	
+	
 }
