@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,6 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import FMlogic.App;
+import FMlogic.User;
 
 public class LogIn {
 	
@@ -42,6 +46,7 @@ public class LogIn {
 		panel.add(logBtn); 
 		
 		regBtn = new JButton ("Create new user");
+		regBtn.addActionListener(new CreateUserEvent());
 		label2 = new JLabel("Not registered yet?");
 		
 		panel2 = new JPanel(); panel2.setBackground(Color.white);
@@ -63,39 +68,35 @@ public class LogIn {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String user = loginText.getText();
-			if (user.equals("")) {} 			// do nothing
-			else if (!userExists(user)) {
+			String userName = loginText.getText();
+			if (userName.equals("")) {} 			// do nothing
+			else if (!App.userExists(userName)) {
 				JOptionPane.showMessageDialog(logBtn, "No such user!", 
 						"Invalid user", JOptionPane.ERROR_MESSAGE);
 				loginText.setText("");
 			} else {
-				frame.dispose();
-				handleUser(user);
+				App.setCurrentUser(userName);
+				//frame.dispose();
+				handleUser();
 			}
 		}
 		
-		private boolean userExists(String user) {
-			// TODO: insert a real user checker here
-			if (user.equals("vaka")) {
-				return true;
-			} 
-			return false;
-		}
-		
-		private void handleUser(String user) {
+		private void handleUser() {
 			// TODO Handle a valid user here
-			System.out.println("User "+ user + " logged in!");
+			User curr = App.getCurrentUser();  		// get the user that is logged in object
+			System.out.println("User is registered");
+			
 		}
 	}
 	
-	public static void main(String[] args) {
-		
-		SwingUtilities.invokeLater(new Runnable () {
-			public void run() {
-				new LogIn();
-			}
-		});
-		
+	private class CreateUserEvent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			//frame.dispose();
+			new Register();
+				
+		}
 	}
 }

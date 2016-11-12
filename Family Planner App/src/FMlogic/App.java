@@ -1,27 +1,64 @@
 package FMlogic;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class System {
+import javax.swing.SwingUtilities;
 
-	private List<User> users;
+import swingGUI.LogIn;
+
+public class App {
+
+	private static List<User> users = new ArrayList();
+	private static User currentUser = null; 
 	
-	private System () {
-		users = null;
+	public static User getCurrentUser() {
+		return currentUser;
 	}
-
-	public List<User> getUsers() {
+	
+	public static boolean setCurrentUser(String userName) {
+		for (User u: users) {
+			if (u.getName().equals(userName)){
+				currentUser = u;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static List<User> getUsers() {
 		return users;
 	}
 
-	public void addUser(User user) {
-		users.add(user);
+	public static void addUser(String userName) {
+		User newUser = new User (userName);
+		users.add(newUser);
 	}
 	
-	public void removeUser(User user){
+	public static void removeUser(User user){
 		users.remove(user);
 	}
 	
+	public static boolean userExists(String user) {
+		// Check if the user is registered 
+		if (users.isEmpty()) {
+			return false;
+		} 
+		for (User u: users) {
+			if (u.getName().equals(user)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
-	
+	public static void main(String[] args) {
+		
+		SwingUtilities.invokeLater(new Runnable () {
+			public void run() {
+				new LogIn();
+			}
+		});
+		
+	}
 }

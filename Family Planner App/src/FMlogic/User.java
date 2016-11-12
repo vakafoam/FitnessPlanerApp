@@ -1,12 +1,13 @@
 package FMlogic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
 
-	private String name;
-	private List<String> foodPrefs;
-	private List<String> exercPrefs;
+	private String name = null;
+	private List<String> foodPrefs = new ArrayList<>();
+	private List<String> exercPrefs = new ArrayList<>();;
 	private double weight;
 	
 	// TODO: Preferences <- a hashmap of food/rating(1-5) ?? 
@@ -45,5 +46,10 @@ public class User {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	@Override
+	public String toString() {
+		return "User [name=" + name + "]";
 	}
 }

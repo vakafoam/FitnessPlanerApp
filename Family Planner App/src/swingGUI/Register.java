@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,7 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+
+import FMlogic.App;
+import FMlogic.User;
 
 
 public class Register {
@@ -36,7 +39,7 @@ public class Register {
 		panel.add(userName);
 
 		regBtn = new JButton("Register");
-		
+		regBtn.addActionListener(new RegisterEvent());
 
 		backBtn = new JButton("<< Back"); backBtn.setBackground(Color.WHITE);
 		
@@ -52,14 +55,24 @@ public class Register {
 	public Register() {
 		initElems();
 	}
+	
+	private class RegisterEvent implements ActionListener {
 
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new Register();
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String name = userName.getText();
+			if (App.userExists(name)) {
+				//TODO: Handle invalid name (already exists)
+				System.out.println("User already exists!");
 			}
-		});
-
+			App.addUser(name);
+			System.out.println(name);
+			frame.dispose();
+			
+			
+		}
+			
+			
 	}
+
 }
