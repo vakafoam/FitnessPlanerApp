@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,10 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import FMlogic.App;
-import FMlogic.User;
 
 public class LogIn {
 	
@@ -77,15 +74,18 @@ public class LogIn {
 			} else {
 				App.setCurrentUser(userName);
 				//frame.dispose();
-				handleUser();
+				handleUser(userName);
 			}
 		}
 		
-		private void handleUser() {
+		private void handleUser(String name) {
 			// TODO Handle a valid user here
-			User curr = App.getCurrentUser();  		// get the user that is logged in object
-			System.out.println("User is registered");
 			
+			App.setCurrentUser(name);
+			System.out.println("User is registered");
+			//System.out.println(App.getCurrentUser().toString());
+			new Options();
+			frame.dispose();			
 		}
 	}
 	

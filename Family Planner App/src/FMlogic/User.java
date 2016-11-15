@@ -6,9 +6,9 @@ import java.util.List;
 public class User {
 
 	private String name = null;
+	private double weight;
 	private List<String> foodPrefs = new ArrayList<>();
 	private List<String> exercPrefs = new ArrayList<>();;
-	private double weight;
 	
 	// TODO: Preferences <- a hashmap of food/rating(1-5) ?? 
 	
