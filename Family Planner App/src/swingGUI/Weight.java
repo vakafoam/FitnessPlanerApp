@@ -4,15 +4,20 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+
+import FMlogic.App;
+import dataStorage.Data;
 
 public class Weight {
 	private JFrame frame;
@@ -30,9 +35,9 @@ public class Weight {
 
 		panel = new JPanel(); panel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		label = new JLabel("Your current weight is: "); 
-		label2 = new JLabel("180 lbs");
-		updateBtn = new JButton("Update"); 
-				
+		double weight = App.getCurrentUser().getWeight();
+		label2 = new JLabel(weight + " lbs");
+						
 		panel.add(Box.createRigidArea(new Dimension(0,10))); 
 		panel.add(label); panel.add(label2); 
 		panel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -43,6 +48,8 @@ public class Weight {
 		weightTxt = new JTextField(5);
 		panel2 = new JPanel();
 		panel2.add(Box.createRigidArea(new Dimension(0,50)));
+		updateBtn = new JButton("Update"); 
+		updateBtn.addActionListener(new UpdateEvent());
 		panel2.add(label3); panel2.add(weightTxt); panel2.add(updateBtn);
 		
 		panel3 = new JPanel();
@@ -58,14 +65,23 @@ public class Weight {
 	public Weight() {
 		initElems();
 	}
+	
+	private class UpdateEvent implements ActionListener {
 
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new Weight();
-			}
-		});
-
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			double oldWeight = App.getCurrentUser().getWeight();
+			try {
+				double weight = Double.parseDouble(weightTxt.getText());
+				App.getCurrentUser().setWeight(weight);      // update the weight of the current user
+				Data.updateWeightFile(oldWeight, weight);    // write the update to a file
+				frame.dispose();
+				
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, "Bad input! Please try again", 
+						"Enter a valid weight", JOptionPane.ERROR_MESSAGE);
+				weightTxt.setText("");
+			}		
+		}	
 	}
 }

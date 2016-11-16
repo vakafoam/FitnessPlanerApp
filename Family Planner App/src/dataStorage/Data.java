@@ -1,5 +1,7 @@
 package dataStorage;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -69,5 +71,36 @@ public class Data {
 		        System.out.println(e);
 		    }
 		}
+	}
+	
+	public static boolean updateWeightFile (double oldWeight, double newWeight) {
+		
+		User user = App.getCurrentUser();
+		
+		try {
+			BufferedReader bufRead = new BufferedReader(new FileReader(USERS));
+			String line;
+			String input = "";       // stores all data in the file
+			
+			while ((line = bufRead.readLine()) != null) {
+				input += line + "\n";
+			}
+			bufRead.close();
+			input = input.replace(user.getName() + " " + oldWeight, 
+					user.getName() + " " + newWeight);                      // replaces the user data
+			
+			File f = new File (USERS);
+			FileWriter fw = new FileWriter(f);
+			BufferedWriter bufWrite = new BufferedWriter(fw);
+			bufWrite.write(input);
+			bufWrite.close();
+			
+			
+		} catch (Exception e) {
+			System.out.println("Reading file error!");
+			return false;
+		}	
+		
+		return true;
 	}
 }

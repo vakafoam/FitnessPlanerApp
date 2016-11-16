@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -32,6 +34,7 @@ public class Options {
 				
 		prefsBtn = new JButton("My Preferences"); prefsBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		weightBtn = new JButton("My Weight"); weightBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		weightBtn.addActionListener(new WeightEvent());
 		MealPlannerBtn = new JButton("Plan Meals");
 		ExercisePlannerBtn = new JButton("Plan Exercises");
 		backBtn = new JButton("<< Back"); backBtn.setBackground(Color.WHITE);
@@ -56,6 +59,16 @@ public class Options {
 
 	public Options() {
 		initElems();
+	}
+	
+	private class WeightEvent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new Weight();
+			
+		}
+		
 	}
 
 	
