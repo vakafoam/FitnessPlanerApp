@@ -103,4 +103,9 @@ public class Data {
 		
 		return true;
 	}
+
+	public static void storePrefs(List<String> mealPrefs, List<String> exercPrefs) {
+		// TODO Store items to files
+		
+	}
 }
