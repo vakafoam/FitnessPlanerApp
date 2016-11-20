@@ -7,3 +7,5 @@ swim 5
 fly 5
 swim 5
 fly 5
+swim 5
+fly 5

@@ -19,11 +19,11 @@ public class Data {
 
 	private final static String USERS = "Users.txt";
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//private final static String USER_MealPREFS = App.getCurrentUser().getName() + "_MealPrefs.txt";
-	private final static String USER_MealPREFS = "vaka" + "_MealPrefs.txt";
-	private final static String USER_ExercPREFS = "vaka" + "_ExercPrefs.txt";
+	private final static String USER_MealPREFS = App.getCurrentUser().getName() + "_MealPrefs.txt";
+	//private final static String USER_MealPREFS = "vaka" + "_MealPrefs.txt";
+	//private final static String USER_ExercPREFS = "vaka" + "_ExercPrefs.txt";
 
-	//private final static String USER_ExercPREFS = App.getCurrentUser().getName() + "_ExercPrefs.txt";
+	private final static String USER_ExercPREFS = App.getCurrentUser().getName() + "_ExercPrefs.txt";
 	private final static String DEFAULT_MealPREFS = "MealPrefs.txt";
 	private final static String DEFAULT_ExercPREFS = "ExercPrefs.txt";
 	private static enum PrefType { MEAL, EXERC };
@@ -259,6 +259,40 @@ public class Data {
 		return mealRates;
 	}
 	
+	public static HashMap<String, Integer> getUserExercPrefsRates (User u) {
+		HashMap<String, Integer> exercRates = new HashMap<>();
+		String userName = u.getName();
+		String filePath = userName + "_ExercPrefs.txt";
+		try {
+			
+			FileReader f = new FileReader(filePath);
+			Scanner file = new Scanner(f);
+			String line;
+			
+			while (file.hasNextLine()) {
+				line = file.nextLine();
+				String[] words = line.split("\\s+");
+				
+				try {
+	                //Read the words, create user for each line
+					String pref = words[0];
+					int rate = Integer.parseInt(words[1]);
+					exercRates.put(pref, rate);					
+					
+	            } catch (ArrayIndexOutOfBoundsException|NumberFormatException e) {
+	                System.err.println("Skipping ill-formatted line " + line);
+	            } 
+			}
+			file.close();
+			f.close();
+
+		} catch (IOException e) {
+            System.err.println(e);
+            return null;
+        }
+		return exercRates;
+	}
+	
 	public static void main(String[] args) {
 		List<String> meal = new ArrayList<>();
 		List<String> exerc = new ArrayList<>();
@@ -268,14 +302,12 @@ public class Data {
 		storePrefs(meal, exerc);
 		User vaka = new User ("vaka");
 		
-		HashMap<String, Integer> meals = getUserMealPrefsRates(vaka);
+		HashMap<String, Integer> exer = getUserExercPrefsRates(vaka);
 		
-		for (Entry<String, Integer> e : meals.entrySet()) {
+		for (Entry<String, Integer> e : exer.entrySet()) {
 			String mealPref = e.getKey();
 			int mealRating = e.getValue();
 			System.out.println(mealPref + " " + mealRating);
 		}
-
-
 	}
 }
