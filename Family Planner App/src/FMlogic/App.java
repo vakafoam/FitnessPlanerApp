@@ -38,7 +38,8 @@ public class App {
 		if (!userExists(userName)) {
 			User newUser = new User (userName);
 			users.add(newUser);
-			Data.saveUser(newUser);      // Write a new user to a file
+			Data.saveUser(newUser);      		// Write a new user to a file
+			Data.createUserPrefsFile(newUser);  // Create default preference files
 		} else {
 			JOptionPane.showMessageDialog(null, "Username is taken! Use another name or login", 
 					"User already registered", JOptionPane.ERROR_MESSAGE);
@@ -82,7 +83,6 @@ public class App {
 		
 		loadUsers();
 		
-
 		
 		SwingUtilities.invokeLater(new Runnable () {
 			public void run() {

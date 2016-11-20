@@ -2,7 +2,6 @@ package swingGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -14,23 +13,19 @@ import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 
 public class Rate {
 
 	private JFrame frame;
-	private JPanel mainPan, mainMealPan, mealHeaderPan, exercHeaderPan, radioMealPan, radioExercPan, mainExercPan, checkMealPan, 
-	               checkExercPan, donePan;
+	private JPanel mainPan, mainMealPan, mealHeaderPan, exercHeaderPan, radioMealPan, radioExercPan, mainExercPan, donePan;
 	private JTabbedPane pane;
-	private JTextField newMeal, newExerc;
 	private JLabel mealHeader, exercHeader;
 	private JButton doneBtn, backBtn;
 	private Map<String,ButtonGroup> mealBtnGroupMap = new HashMap<>();

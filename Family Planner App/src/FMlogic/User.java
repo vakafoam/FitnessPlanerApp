@@ -7,8 +7,8 @@ public class User {
 
 	private String name = null;
 	private double weight;
-	private List<String> foodPrefs = new ArrayList<>();
-	private List<String> exercPrefs = new ArrayList<>();
+	private List<String> foodPrefs = new ArrayList<>();   // we do not use it now
+	private List<String> exercPrefs = new ArrayList<>();  // all stored in files
 	
 	// TODO: Preferences <- a hashmap of food/rating(1-5) ?? 
 	
