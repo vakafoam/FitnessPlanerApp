@@ -1,0 +1,8 @@
+11/20/2016
+0 B Oatmeal 550.0 L Pizza 700.0 D Lasagna 800.0
+1 B Oatmeal 550.0 L Pizza 700.0 D Lasagna 800.0
+2 B Oatmeal 550.0 L Pizza 700.0 D Lasagna 800.0
+3 B Oatmeal 550.0 L Pizza 700.0 D Lasagna 800.0
+4 B Oatmeal 550.0 L Pizza 700.0 D Lasagna 800.0
+5 B Oatmeal 550.0 L Pizza 700.0 D Lasagna 800.0
+6 B Oatmeal 550.0 L Pizza 700.0 D Lasagna 800.0

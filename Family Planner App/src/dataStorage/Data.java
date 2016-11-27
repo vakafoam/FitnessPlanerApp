@@ -9,21 +9,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import FMlogic.App;
 import FMlogic.User;
+import MPLogic.Meal;
+import MPLogic.Week;
+import MPLogic.WeekDay;
 
 public class Data {
 
 	private final static String USERS = "Users.txt";
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	private final static String USER_MealPREFS = App.getCurrentUser().getName() + "_MealPrefs.txt";
-	//private final static String USER_MealPREFS = "vaka" + "_MealPrefs.txt";
-	//private final static String USER_ExercPREFS = "vaka" + "_ExercPrefs.txt";
+	//private final static String USER_MealPREFS = App.getCurrentUser().getName() + "_MealPrefs.txt";
+	private final static String USER_MealPREFS = "vaka" + "_MealPrefs.txt";
+	private final static String USER_ExercPREFS = "vaka" + "_ExercPrefs.txt";
 
-	private final static String USER_ExercPREFS = App.getCurrentUser().getName() + "_ExercPrefs.txt";
+	//private final static String USER_ExercPREFS = App.getCurrentUser().getName() + "_ExercPrefs.txt";
 	private final static String DEFAULT_MealPREFS = "MealPrefs.txt";
 	private final static String DEFAULT_ExercPREFS = "ExercPrefs.txt";
 	private static enum PrefType { MEAL, EXERC };
@@ -294,20 +296,34 @@ public class Data {
 	}
 	
 	public static void main(String[] args) {
+		/*
 		List<String> meal = new ArrayList<>();
 		List<String> exerc = new ArrayList<>();
 		meal.add("fish"); meal.add("creampie");
 		exerc.add("swim"); exerc.add("fly"); 
 		
 		storePrefs(meal, exerc);
-		User vaka = new User ("vaka");
+		User u = new User ("vaka");
 		
-		HashMap<String, Integer> exer = getUserExercPrefsRates(vaka);
+		HashMap<String, Integer> exer = getUserExercPrefsRates(u);
 		
 		for (Entry<String, Integer> e : exer.entrySet()) {
 			String mealPref = e.getKey();
 			int mealRating = e.getValue();
 			System.out.println(mealPref + " " + mealRating);
+		}
+		*/
+		
+		
+		// the way to get the Meal Plans, put in View Plans logic
+		User u = new User ("Mary");
+		Week week = new MealPlannerData().getCurrentMenu(u);
+		for (int i=0;i<7;i++) {
+			WeekDay day = week.getWeekDay(i);
+			Meal b = day.getBreakFast();
+			Meal l = day.getLunch();
+			Meal d = day.getDinner();
+			System.out.println(b.getMealName() + l.getMealName() + d.getMealName());
 		}
 	}
 }

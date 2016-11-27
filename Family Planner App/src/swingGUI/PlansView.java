@@ -30,7 +30,7 @@ public class PlansView {
 	private JComboBox<String> mealWeek, exercWeek;
 	private JTable mealTable, exercTable;
 	private JButton rateMealBtn, rateExercBtn, doneBtn, backBtn;
-	private final String[] columnNames = {"Sunday", "Monday", "Tuesday", 
+	private final String[] columnNames = {"MEAL","Sunday", "Monday", "Tuesday", 
 			"Wednesday", "Thursday", "Friday", "Saturday"};
 	
 	public PlansView() {
@@ -102,11 +102,11 @@ public class PlansView {
 	
 	private Object[][] getMealData() {
 		 Object[][] data = {
-			        {"Porridge", "Fruits",
+			        {"kjhkj","Porridge", "Fruits",
 			         "Oatmeals", "Yogurt", "Fruits", "Oatmeals", "Yogurt"},
-			        {"Potatoes", "Pasta",
+			        {"","Potatoes", "Pasta",
 				         "Rice", "Pizza", "Buchwheat", "Vegetables", "Pizza"},
-			        {"Fruits", "Vegetables",
+			        {"","Fruits", "Vegetables",
 					         "Salad", "Yogurt", "Rice", "Salad", "Yogurt"},
 			        };
 		return data;
