@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,6 +21,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import FMlogic.User;
+import MPLogic.Meal;
+import MPLogic.Week;
+import MPLogic.WeekDay;
+import dataStorage.MealPlannerData;
 
 public class PlansView {
 
@@ -101,13 +109,26 @@ public class PlansView {
 	}
 	
 	private Object[][] getMealData() {
-		 Object[][] data = {
-			        {"kjhkj","Porridge", "Fruits",
-			         "Oatmeals", "Yogurt", "Fruits", "Oatmeals", "Yogurt"},
-			        {"","Potatoes", "Pasta",
-				         "Rice", "Pizza", "Buchwheat", "Vegetables", "Pizza"},
-			        {"","Fruits", "Vegetables",
-					         "Salad", "Yogurt", "Rice", "Salad", "Yogurt"},
+		// TODO: Have to change to current user
+		
+		List<String> br = new ArrayList<>(8); br.add("Breakfast");
+		List<String> lu = new ArrayList<>(8); lu.add("Lunch");
+		List<String> di = new ArrayList<>(8); di.add("Dinner");
+		User u = new User ("Mary");
+		Week week = new MealPlannerData().getCurrentMenu(u);
+		for (int i=0;i<7;i++) {
+			WeekDay day = week.getWeekDay(i);
+			String b = day.getBreakFast().getMealName();
+			String l = day.getLunch().getMealName();
+			String d = day.getDinner().getMealName();
+			br.add(b); lu.add(l); di.add(d);
+		}
+		Object[] breakfast = br.toArray();
+		Object[] lunch = lu.toArray();
+		Object[] dinner = di.toArray();
+				
+		Object[][] data = {
+			        breakfast, lunch, dinner
 			        };
 		return data;
 	}
