@@ -1,0 +1,10 @@
+Pizza 5
+Salad 5
+Oatmeals 5
+Chicken 5
+Salmon 5
+Beef 5
+Pork 5
+Yogurt 5
+Pasta 5
+Vegetables 5

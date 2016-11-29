@@ -9,6 +9,7 @@ public class User {
 	private double weight;
 	private List<String> foodPrefs = new ArrayList<>();   // we do not use it now
 	private List<String> exercPrefs = new ArrayList<>();  // all stored in files
+	private double goalWeight;
 	
 	// TODO: Preferences <- a hashmap of food/rating(1-5) ?? 
 	
@@ -46,6 +47,14 @@ public class User {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+	
+	public double getGoalWeight() {
+		return goalWeight;
+	}
+
+	public void setGoalWeight(double weight) {
+		this.goalWeight = weight;
 	}
 
 	@Override

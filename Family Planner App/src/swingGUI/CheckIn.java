@@ -78,21 +78,24 @@ public class CheckIn {
 		mainMealPan.setLayout(new BorderLayout());
 		
 		rateMealPan.setLayout(new BorderLayout(5,20)); 
-		rateMealBtn = new JButton("Rate selected meals"); rateMealPan.add(rateMealBtn, BorderLayout.EAST);
-		rateMealBtn.addActionListener(new RateMealEvent());
+		rateMealBtn = new JButton("Rate selected meals"); 
+		rateMealBtn.addActionListener(new RateEvent());
+		rateMealPan.add(rateMealBtn, BorderLayout.EAST);
+		
 		
 		mealBoxPan.add(checkMealPan, BorderLayout.CENTER); mealBoxPan.add(rateMealPan, BorderLayout.SOUTH); 
 		mainMealPan.add(mealBoxPan, BorderLayout.NORTH);
 	}
 	
 	private void createMealCheckBoxes() {
-		//TODO: Have to read these items from a prev week MealPlan
-		
-		for (int i=0;i<5;i++) {     // read the items from a plan
-			JCheckBox check1 = new JCheckBox("Meal 1");
-			check1.setSelected(true); 
-			checkMealPan.add(check1);
-			
+				
+		Object[][] meals = PlansView.getMealData();
+		for (int i=0; i<meals.length; i++) {
+			for (int j = 0; j<meals[i].length; j++) {
+				JCheckBox check = new JCheckBox((String)meals[i][j]);
+				check.setSelected(false); 
+				checkMealPan.add(check);
+			}
 		}
 	}
 	
@@ -113,8 +116,10 @@ public class CheckIn {
 		mainExercPan.setLayout(new BorderLayout());
 
 		rateExercPan.setLayout(new BorderLayout(5,20));
-		rateExercBtn = new JButton("Rate selected exercises"); rateExercPan.add(rateExercBtn, BorderLayout.EAST);
-		rateExercBtn.addActionListener(new RateExercEvent());
+		rateExercBtn = new JButton("Rate selected exercises"); 
+		rateExercBtn.addActionListener(new RateEvent());
+		rateExercPan.add(rateExercBtn, BorderLayout.EAST);
+		
 		
 		exercBoxPan.add(checkExercPan, BorderLayout.CENTER); exercBoxPan.add(rateExercPan, BorderLayout.SOUTH); 
 		mainExercPan.add(exercBoxPan, BorderLayout.NORTH); 
@@ -122,6 +127,7 @@ public class CheckIn {
 	
 	private void createExercCheckBoxes() {
 		// TODO: Have to read these items from a prev week ExercPlan
+		
 		for (int i=0;i<5;i++) {     // read the items from a plan
 			JCheckBox check1 = new JCheckBox("Exerc 1");
 			check1.setSelected(true); 
@@ -131,20 +137,15 @@ public class CheckIn {
 		
 	}
 	
-	private class RateMealEvent implements ActionListener {
+	private class RateEvent implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			
-		}
-	}
-	
-	private class RateExercEvent implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
+			saveCheckedItems(checkMealPan, mealsConsumed);
+			saveCheckedItems(checkExercPan, exercConsumed);
+			new Rate(mealsConsumed, exercConsumed);
+			frame.dispose();
 			
 		}
 	}
@@ -156,6 +157,9 @@ public class CheckIn {
 			//TODO: Store in a file ?
 			saveCheckedItems(checkMealPan, mealsConsumed);   // store checked items in lists
 			saveCheckedItems(checkExercPan, exercConsumed);
+			new Options();
+			frame.dispose();
+			
 			
 			/*  Testing the Checked storages
 			for (String name : mealsConsumed ) {
@@ -185,15 +189,5 @@ public class CheckIn {
 			
 		}
 		
-	}
-	
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new CheckIn();
-			}
-		});
-	}
-	
+	}	
 }

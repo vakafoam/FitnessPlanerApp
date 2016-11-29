@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import FMlogic.App;
+
 public class Options {
 	private JFrame frame;
 	private Container pane;
@@ -31,13 +33,16 @@ public class Options {
 		panel = new JPanel();
 		label = new JLabel("Please select an option to proceed"); label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		plansBtn = new JButton("View My Plans"); plansBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		plansBtn.addActionListener(new PlansEvent());
 				
 		prefsBtn = new JButton("My Preferences"); prefsBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		prefsBtn.addActionListener(new PrefsEvent());
 		weightBtn = new JButton("My Weight"); weightBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		weightBtn.addActionListener(new WeightEvent());
 		MealPlannerBtn = new JButton("Plan Meals");
 		ExercisePlannerBtn = new JButton("Plan Exercises");
 		backBtn = new JButton("<< Back"); backBtn.setBackground(Color.WHITE);
+		backBtn.addActionListener(new BackEvent());
 		
 		panel.add(Box.createRigidArea(new Dimension(0,10))); 
 		panel.add(label); panel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -59,6 +64,37 @@ public class Options {
 
 	public Options() {
 		initElems();
+	}
+	
+	private class PlansEvent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new PlansView();
+			frame.dispose();
+		}
+		
+	}
+	
+	private class PrefsEvent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new Prefs();
+			frame.dispose();
+		}
+	}
+	
+	private class BackEvent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			//App.setCurrentUser(null);
+			new LogIn();
+			frame.dispose();
+		}
+		
 	}
 	
 	private class WeightEvent implements ActionListener {

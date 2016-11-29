@@ -6,8 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -18,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 
 
 public class Rate {
@@ -32,8 +34,13 @@ public class Rate {
 	private Map<String,Integer> mealRates = new HashMap<>();         // store meal rates from user input
 	private Map<String,ButtonGroup> exercBtnGroupMap = new HashMap<>();
 	private Map<String,Integer> exercRates = new HashMap<>();         // store meal rates from user input
+	private List<String> mealsConsumed, exercConsumed;
+	private Set<String> mealSet = new HashSet<>(); 
+	private Set<String> exercSet = new HashSet<>(); 
 	
-	public Rate() {
+	public Rate(List<String> mealsConsumed, List<String> exercConsumed) {
+		this.mealsConsumed = mealsConsumed;
+		this.exercConsumed = exercConsumed;
 		initElems();
 	}
 	
@@ -86,18 +93,21 @@ public class Rate {
 	}
 	
 	private void createMealRates() {
-		//TODO: Have to read these items from a checkedIn meals
-		
-		for (int i=0;i<5;i++) {           // TODO: for all checked meals
-			String mealName = "Meal 1 toString";   // get the name of meal
+		// adding checked meals into a set for rating
+		for (String m: mealsConsumed) {  
+			if ((!(m==null))&&(!m.equals("Breakfast")) && (!m.equals("Lunch"))&& (!m.equals("Dinner"))) {
+				mealSet.add(m);
+			}
+		}
+		for (String meal: mealSet) { 
 			JPanel p = new JPanel();
-			JLabel mealLbl = new JLabel(mealName);
+			JLabel mealLbl = new JLabel(meal);
 			p.add(mealLbl);		
 	
 			ButtonGroup bg = createRateBtns(p);
 			p.setBorder(javax.swing.BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 			
-			mealBtnGroupMap.put(mealName, bg);    // store meal name + radiobutton group in a map
+			mealBtnGroupMap.put(meal, bg);    // store meal name + radiobutton group in a map
 			radioMealPan.add(p);
 		}
 	}
@@ -142,16 +152,16 @@ public class Rate {
 	private void createExercRates() {
 		//TODO: Have to read these items from a checkedIn exerc
 
-		for (int i=0;i<5;i++) {           // TODO: for all checked exerc
-			String exercName = "Exerc 1 toString";   // get the name of exerc
+		for (String exerc : exercConsumed) {           // TODO: for all checked exerc
+			
 			JPanel p = new JPanel();
-			JLabel exercLbl = new JLabel(exercName);
+			JLabel exercLbl = new JLabel(exerc);
 			p.add(exercLbl);		
 
 			ButtonGroup bg = createRateBtns(p);
 			p.setBorder(javax.swing.BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-			exercBtnGroupMap.put(exercName, bg);    // store meal name + radiobutton group in a map
+			exercBtnGroupMap.put(exerc, bg);    // store meal name + radiobutton group in a map
 			radioExercPan.add(p);
 
 		}
@@ -164,6 +174,8 @@ public class Rate {
 			
 			saveRates (mealBtnGroupMap, mealRates); 
 			saveRates (exercBtnGroupMap, exercRates); 
+			new Options();
+			frame.dispose();
 			
 			//TODO: Store ratings in files 
 			
@@ -202,14 +214,5 @@ public class Rate {
 			
 		}
 		
-	}
-	
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new Rate();
-			}
-		});
 	}
 }

@@ -9,3 +9,10 @@ swim 5
 fly 5
 swim 5
 fly 5
+PowerLifting 5
+fly 5
+Shaping 5
+CrossFit 5
+Joga 5
+swim 5
+Jogging 5

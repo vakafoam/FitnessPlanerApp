@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -18,6 +19,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import FMlogic.App;
 import dataStorage.Data;
 
 public class Prefs {
@@ -95,12 +97,11 @@ public class Prefs {
 	}
 	
 	private void createMealCheckBoxes() {
-		//TODO: Have to read these items from a file
-		JCheckBox check1 = new JCheckBox("Baked Potatoes"); check1.setSelected(true); checkMealPan.add(check1);
-		JCheckBox check2 = new JCheckBox("Roasted Beef"); check2.setSelected(true); checkMealPan.add(check2);
-		JCheckBox check3 = new JCheckBox("Fish"); check3.setSelected(true); checkMealPan.add(check3);
-		JCheckBox check4 = new JCheckBox("Desert"); check4.setSelected(true); checkMealPan.add(check4);
-		JCheckBox check5 = new JCheckBox("Rice"); check5.setSelected(true); checkMealPan.add(check5);
+				
+		HashMap<String, Integer> meals = Data.getUserMealPrefsRates(App.getCurrentUser());
+		for (String meal: meals.keySet()) {
+			JCheckBox check1 = new JCheckBox(meal); check1.setSelected(true); checkMealPan.add(check1);
+		}
 		
 	}
 	
@@ -131,12 +132,11 @@ public class Prefs {
 	}
 	
 	private void createExercCheckBoxes() {
-		JCheckBox check1 = new JCheckBox("Jogging"); check1.setSelected(true); checkExercPan.add(check1);
-		JCheckBox check2 = new JCheckBox("Power Lifting"); check2.setSelected(true); checkExercPan.add(check2);
-		JCheckBox check3 = new JCheckBox("Yoga"); check3.setSelected(true); checkExercPan.add(check3);
-		JCheckBox check4 = new JCheckBox("Shaping"); check4.setSelected(true); checkExercPan.add(check4);
-		JCheckBox check5 = new JCheckBox("Swimming"); check5.setSelected(true); checkExercPan.add(check5);
 		
+		HashMap<String, Integer> exerc = Data.getUserExercPrefsRates(App.getCurrentUser());
+		for (String ex: exerc.keySet()) {
+			JCheckBox check1 = new JCheckBox(ex); check1.setSelected(true); checkExercPan.add(check1);
+		}	
 	}
 	
 	private class AddMealEvent implements ActionListener {
@@ -208,15 +208,5 @@ public class Prefs {
 			frame.dispose();
 		}
 		
-	}
-	
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new Prefs();
-			}
-		});
-
 	}
 }

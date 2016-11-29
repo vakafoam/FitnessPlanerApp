@@ -17,6 +17,9 @@ import MPLogic.Meal;
 import MPLogic.Week;
 import MPLogic.WeekDay;
 
+/*
+ * Data management class for reading/writing to Family Member files 
+ */
 public class Data {
 
 	private final static String USERS = "Users.txt";
@@ -31,6 +34,9 @@ public class Data {
 	private static enum PrefType { MEAL, EXERC };
 
 	
+	/*
+	 * Read registered users from file, store in system user list
+	 */
 	public static List<User> readUsers() {
 		List<User> users = App.getUsers(); 
 		new ArrayList<>();
@@ -48,8 +54,10 @@ public class Data {
 	                //Read the words, create user for each line
 					String name = words[0];
 					double weight = Double.parseDouble(words[1]);
+					double goalWeight = Double.parseDouble(words[2]);
 					User user = new User(name);
 					user.setWeight(weight);
+					user.setGoalWeight(goalWeight);
 					users.add(user);         // users is a pointer to the users list in App class
 					
 	            } catch (ArrayIndexOutOfBoundsException|NumberFormatException e) {
@@ -67,13 +75,17 @@ public class Data {
 		return users;
 	}
 	
+	/*
+	 * Write a new user to a file
+	 * @parameter User u
+	 */
 	public static void saveUser (User u) {
 		File f = null;
 		FileWriter fw = null;
 		try {
 			f = new File(USERS);
 			fw = new FileWriter(f, true);
-			fw.append("\n" + u.getName()+" "+u.getWeight()+" ");
+			fw.append("\n" + u.getName()+" "+u.getWeight()+" "+u.getGoalWeight());
 			fw.flush();
 		} catch (IOException e) {
 			System.err.println(e);
@@ -87,6 +99,10 @@ public class Data {
 		}
 	}
 	
+	/*
+	 * Replace the existing weight of the current user
+	 * @parameters double oldWeight, double newWeight
+	 */
 	public static boolean updateWeightFile (double oldWeight, double newWeight) {
 		
 		User user = App.getCurrentUser();
@@ -120,6 +136,7 @@ public class Data {
 
 	/*
 	 * Create a file with users prefs + rates (meal or exerc), populate with default items
+	 * @parameters PrefType type, User u
 	 */
 	private static void createUserPrefsFile (PrefType type, User u) {
 		
@@ -158,6 +175,10 @@ public class Data {
 			}		
 	}
 	
+	/*
+	 * Create a file with default preferences for a given user
+	 * @parameter User u
+	 */
 	public static void createUserPrefsFile (User u) {
 		String name = u.getName();
 		File meals = new File (name + "_MealPrefs.txt");
@@ -171,15 +192,15 @@ public class Data {
 	 */
 	public static void storePrefs(List<String> mealPrefs, List<String> exercPrefs) {
 		
-		File mealFile = new File (USER_MealPREFS);
-		File exercFile = new File (USER_ExercPREFS);
+		File mealFile = new File (App.getCurrentUser().getName() + "_MealPrefs.txt");
+		File exercFile = new File (App.getCurrentUser().getName() + "_ExercPrefs.txt");
 		if (!mealFile.exists()) createUserPrefsFile(PrefType.MEAL, App.getCurrentUser());
 		if (!exercFile.exists()) createUserPrefsFile(PrefType.EXERC, App.getCurrentUser());
 		
 		// Storing meal preferences
 		try {
 			
-			BufferedReader bufRead = new BufferedReader(new FileReader(USER_MealPREFS));
+			BufferedReader bufRead = new BufferedReader(new FileReader(App.getCurrentUser().getName() + "_MealPrefs.txt"));
 			String line;
 			String input = "";       // stores all data from the file
 			
@@ -204,7 +225,7 @@ public class Data {
 		// Storing exercise preferences
 		try {
 
-			BufferedReader bufRead = new BufferedReader(new FileReader(USER_ExercPREFS));
+			BufferedReader bufRead = new BufferedReader(new FileReader(App.getCurrentUser().getName() + "_ExercPrefs.txt"));
 			String line;
 			String input = "";       // stores all data from the file
 
@@ -227,6 +248,11 @@ public class Data {
 		}				
 	}
 	
+	/*
+	 * Get saved meal preferences and rates from a file, return a hashmap of the values
+	 * @parameter User user
+	 * @return HashMap<String, Integer> userMealRatesPreferences
+	 */
 	public static HashMap<String, Integer> getUserMealPrefsRates (User u) {
 		HashMap<String, Integer> mealRates = new HashMap<>();
 		String userName = u.getName();
@@ -261,6 +287,11 @@ public class Data {
 		return mealRates;
 	}
 	
+	/*
+	 * Get saved exercise preferences and rates from a file, return a hashmap of the values
+	 * @parameter User user
+	 * @return HashMap<String, Integer> userExerciseRatesPreferences
+	 */
 	public static HashMap<String, Integer> getUserExercPrefsRates (User u) {
 		HashMap<String, Integer> exercRates = new HashMap<>();
 		String userName = u.getName();
@@ -325,5 +356,7 @@ public class Data {
 			Meal d = day.getDinner();
 			System.out.println(b.getMealName() + l.getMealName() + d.getMealName());
 		}
+		
+		
 	}
 }

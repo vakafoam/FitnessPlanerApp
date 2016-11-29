@@ -37,7 +37,7 @@ public class PlansView {
 	private JLabel chooseWeek;
 	private JComboBox<String> mealWeek, exercWeek;
 	private JTable mealTable, exercTable;
-	private JButton rateMealBtn, rateExercBtn, doneBtn, backBtn;
+	private JButton checkMealBtn, checkExercBtn, doneBtn, backBtn;
 	private final String[] columnNames = {"MEAL","Sunday", "Monday", "Tuesday", 
 			"Wednesday", "Thursday", "Friday", "Saturday"};
 	
@@ -98,8 +98,9 @@ public class PlansView {
 		mealPlanPan.setLayout(new BoxLayout(mealPlanPan, BoxLayout.Y_AXIS));
 		
 		RateMealPan = new JPanel();
-		rateMealBtn = createBtn("Check in Meals");
-		RateMealPan.add(rateMealBtn); mainMealPan.add(mealPlanPan); mainMealPan.add(RateMealPan);
+		checkMealBtn = createBtn("Check in Meals");
+		checkMealBtn.addActionListener(new CheckEvent());
+		RateMealPan.add(checkMealBtn); mainMealPan.add(mealPlanPan); mainMealPan.add(RateMealPan);
 	}
 	
 	private JButton createBtn (String name) {
@@ -108,7 +109,7 @@ public class PlansView {
 		return btn;
 	}
 	
-	private Object[][] getMealData() {
+	protected static Object[][] getMealData() {
 		// TODO: Have to change to current user
 		
 		List<String> br = new ArrayList<>(8); br.add("Breakfast");
@@ -151,6 +152,16 @@ public class PlansView {
 		}
 	}
 	
+	private class CheckEvent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new CheckIn();
+			new DoneEvent();
+			frame.dispose();
+		}
+	}
+	
 	private void addExercPlans() {
 		mainExercPan = new JPanel();
 		exercPlanPan = new JPanel();
@@ -172,8 +183,9 @@ public class PlansView {
 		exercPlanPan.setLayout(new BoxLayout(exercPlanPan, BoxLayout.Y_AXIS));
 		
 		RateExercPan = new JPanel();		
-		rateExercBtn = createBtn("Check in Exercises"); 
-		RateExercPan.add(rateExercBtn);
+		checkExercBtn = createBtn("Check in Exercises"); 
+		checkExercBtn.addActionListener(new CheckEvent());
+		RateExercPan.add(checkExercBtn);
 		mainExercPan.add(exercPlanPan); mainExercPan.add(RateExercPan);
 	}
 	
@@ -225,13 +237,4 @@ public class PlansView {
 		return data;
 	}
 
-	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new PlansView();
-			}
-		});
-
-	}
 }

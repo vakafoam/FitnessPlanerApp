@@ -9,6 +9,9 @@ import javax.swing.SwingUtilities;
 import dataStorage.Data;
 import swingGUI.LogIn;
 
+/*
+ * Application class with the main method to start the application
+ */
 public class App {
 
 	private static List<User> users = new ArrayList<>();
@@ -34,6 +37,10 @@ public class App {
 		return users;
 	}
 
+	/*
+	 * Add user to the system and save to Users.txt
+	 * @parameter String userName
+	 */
 	public static void addUser(String userName) {
 		if (!userExists(userName)) {
 			User newUser = new User (userName);
@@ -51,6 +58,11 @@ public class App {
 		//TODO: Remove user form a file
 	}
 	
+	/*
+	 * Return an existing user object by name
+	 * @parameter String userName
+	 * @return User user or null if does not exist
+	 */
 	public static User getUserByName (String name) {
 		for (User u: users) {
 			if (u.getName().equals(name)) {
@@ -60,6 +72,9 @@ public class App {
 		return null;
 	}
 	
+	/*
+	 * Return boolean of if the user exists
+	 */
 	public static boolean userExists (String user) {
 		// Check if the user is registered 
 		if (users.isEmpty()) {
@@ -81,7 +96,7 @@ public class App {
 	
 	public static void main(String[] args) {
 		
-		loadUsers();
+		loadUsers(); // read registered users from the file
 		
 		
 		SwingUtilities.invokeLater(new Runnable () {
